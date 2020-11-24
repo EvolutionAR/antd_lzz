@@ -1,19 +1,15 @@
 import React from "react";
-import { Form, Input, Button, Checkbox } from 'antd';
-import {getCityName,singlePoetry} from '../api'
-const onFinish = (values) => {
-    console.log('Success:', values);
-  };
-
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-  };
+import { Form, Input, Button, Checkbox,Image } from 'antd';
+import {getCityName,getCode,getLoginKey,login} from '../api'
+import { fnencrypt } from '../utils/commonTool'
 export default class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             username: '1111', 
             lastGistUrl: '',
+            baseUrl:'',
+            publicKey:'',
             layout : {
                 labelCol: {
                   span: 8,
@@ -30,24 +26,63 @@ export default class Login extends React.Component {
               }
         }
        
-        this.handleClick = this.handleClick.bind(this)
+        this.getCode = this.getCode.bind(this)
+        this.onFinish = this.onFinish.bind(this)
+        this.onFinishFailed = this.onFinishFailed.bind(this)
     }
     componentDidMount(){
-       this.handleClick()
-       this.setState({username:'sdsadsa'})
-       console.log('什么东西被调用了')
+       this.getCode()
+    //    this.setState({username:'sdsadsa'})
+    //    console.log('什么东西被调用了')
     }   
+    onFinish = (values) => {
+      
+            let params = {}
+            getLoginKey(params).then(res => {
+              console.log(res)
+              if (res.code === '0') {
+                  this.setState({
+                      publicKey:res.data
+                  })
+                // this.publicKey = res.data
+                this.login(values,this.state.publicKey)
+                // console.log(this.state.publicKey,'ssss')
+              } else {
+                this.$message('获取权限出错')
+              }
+            })
+      
+      }
+    login(values){
+        values.password = fnencrypt(values.password, this.state.publicKey)
+        const body = values
+        login(body).then(res=>{
+           
+        })
+    }
+    onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
+      };
      handleClick() {
       getCityName({}).then(res =>{
        })
+    }
+    getCode(){
+        getCode().then(res=>{
+            this.setState({
+                baseUrl:`data:image/gif;base64,${res.data.data}`
+            })
+            // this.state.baseUrl = `data:image/gif;base64,${res.data.data}`
+            // console.log(this.state.baseUrl,res.data)
+        })
     }
     render() {
       return <Form
       {...this.state.layout}
       name="basic"
       initialValues={{ remember: true }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
+      onFinish={this.onFinish}
+      onFinishFailed={this.onFinishFailed}
     >
       <Form.Item
         label="用户名"
@@ -64,12 +99,13 @@ export default class Login extends React.Component {
       >
         <Input.Password />
       </Form.Item>
+      <Image src={this.state.baseUrl}/>
       <Form.Item
         label="验证码"
-        name="password2"
+        name="code"
         rules={[{ required: true, message: '请输入验证码' }]}
       >
-        <Input.Password />
+        <Input />
       </Form.Item>
 
       <Form.Item {...this.state.tailLayout} name="remember" valuePropName="checked">
