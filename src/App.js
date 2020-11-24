@@ -8,11 +8,12 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import Login from './pages/login';
 export default function App() {
   return (
     <Router>
       <div>
-        <nav>
+        {/* <nav>
           <ul>
             <li>
               <Link to="/">Home</Link>
@@ -24,7 +25,7 @@ export default function App() {
               <Link to="/users">Users</Link>
             </li>
           </ul>
-        </nav>
+        </nav> */}
 
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
@@ -34,6 +35,9 @@ export default function App() {
           </Route>
           <Route path="/users">
             <Users />
+          </Route>
+          <Route path="/login">
+            <Login />
           </Route>
           <Route path="/">
             <Home />
