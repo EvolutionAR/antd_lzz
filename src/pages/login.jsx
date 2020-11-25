@@ -32,11 +32,8 @@ export default class Login extends React.Component {
     }
     componentDidMount(){
        this.getCode()
-    //    this.setState({username:'sdsadsa'})
-    //    console.log('什么东西被调用了')
     }   
     onFinish = (values) => {
-      
             let params = {}
             getLoginKey(params).then(res => {
               console.log(res)

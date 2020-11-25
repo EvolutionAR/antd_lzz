@@ -1,47 +1,31 @@
 import './App.css';
 import { Button } from 'antd';
-import Home from './components/home'
 import React from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  Redirect 
 } from "react-router-dom";
 import Login from './pages/login';
+import Home from './pages/home/home.jsx'
 export default function App() {
   return (
     <Router>
       <div>
-        {/* <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/users">Users</Link>
-            </li>
-          </ul>
-        </nav> */}
-
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
         <Switch>
-          <Route path="/about">
-            <About />
+          <Route path="/home">
+            <Home />
           </Route>
           <Route path="/users">
             <Users />
           </Route>
-          <Route path="/login">
+          <Route exact path="/login">
             <Login />
           </Route>
-          <Route path="/">
-            <Home />
-          </Route>
+          <Redirect from="/*" to="/login" />
+         
         </Switch>
       </div>
     </Router>

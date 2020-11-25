@@ -11,13 +11,18 @@ const  singlePoetry = (params) => {
 const getLoginKey = (params) => {
     return axios.get(`/max/login/getLoginKey`, params).then(res => res.data)
   }
-  const login = (params) => {
+const login = (params) => {
     return axios.post(`/max/user/login`, params).then(res => res.data)
-  }
+}
+const findMenuByUserId = (params) => {
+    return axios.get(`/max/menuInfo/findMenuByUserId`, params).then(res => res.data)
+}
+ 
 export {
     getCityName,
     singlePoetry,
     getCode,
     getLoginKey,
-    login
+    login,
+    findMenuByUserId
 }
