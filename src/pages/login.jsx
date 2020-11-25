@@ -32,6 +32,7 @@ export default class Login extends React.Component {
     }
     componentDidMount(){
        this.getCode()
+       console.log('什么东西啊')
     }   
     onFinish = (values) => {
             let params = {}
@@ -54,7 +55,7 @@ export default class Login extends React.Component {
         values.password = fnencrypt(values.password, this.state.publicKey)
         const body = values
         login(body).then(res=>{
-           
+          this.props.history.push('/home')
         })
     }
     onFinishFailed = (errorInfo) => {
