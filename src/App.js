@@ -10,15 +10,28 @@ import {
 import { createBrowserHistory } from 'history'
 import Login from './pages/login';
 import Home from './pages/home/home.jsx'
+// const routes = [
+//   {
+//     path: "/Login",
+//     component: Login
+//   },
+//   {
+//     path: "/Home",
+//     component: Home,
+//     routes: [
+//       {
+//         path: "/tacos/Users",
+//         component: Users
+//       }
+//     ]
+//   }
+// ];
 export default function App() {
   return (
     <Router history = { createBrowserHistory }>
       <div>
         <Switch>
           <Route path="/home" component={Home}>
-          </Route>
-          <Route path="/users" >
-            <Users />
           </Route>
           <Route exact path="/login" component={Login}>
           </Route>

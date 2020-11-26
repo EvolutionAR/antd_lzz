@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, Checkbox,Image } from 'antd';
+import { Form, Input, Button, Checkbox,Image,message } from 'antd';
 import {getCityName,getCode,getLoginKey,login} from '../api'
 import { fnencrypt } from '../utils/commonTool'
 export default class Login extends React.Component {
@@ -55,6 +55,10 @@ export default class Login extends React.Component {
         values.password = fnencrypt(values.password, this.state.publicKey)
         const body = values
         login(body).then(res=>{
+          if(res.code !== '0'){
+            message.error(res.desc)
+            return
+          }
           this.props.history.push('/home')
         })
     }

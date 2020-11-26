@@ -2,12 +2,6 @@ import React from "react";
 import { Menu} from 'antd';
 import {findMenuByUserId} from '../../api'
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-  } from "react-router-dom";
-import {
     AppstoreOutlined,
     BarChartOutlined,
     CloudOutlined,
@@ -17,6 +11,12 @@ import {
     UploadOutlined,
     VideoCameraOutlined,
   } from '@ant-design/icons';
+  import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom";
 export default class LZmenu extends React.Component {
     constructor(props) {
         super(props)
@@ -39,15 +39,12 @@ export default class LZmenu extends React.Component {
     };
     render() {
       return  <div>
-      {/* <Button type="primary" onClick={this.toggleCollapsed} style={{ marginBottom: 16 }}>
-        {React.createElement(this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
-      </Button> */}
       <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
         <Menu.Item key="1" icon={<UserOutlined />}>
-          nav 1
+          <Link to="/home/users">users</Link>
         </Menu.Item>
         <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-          nav 2
+        <Link to="/home/tacos">tacos</Link>
         </Menu.Item>
         <Menu.Item key="3" icon={<UploadOutlined />}>
           nav 3
